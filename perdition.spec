@@ -4,7 +4,7 @@ Version:	0.1.5
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{ver}.tar.gz
+Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{version}.tar.gz
 URL:		http://vergenet.net/linux/perdition/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
