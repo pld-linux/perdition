@@ -1,200 +1,157 @@
-%define ver      0.1.5
-%define rel      1
-%define prefix   /usr
-
-Summary: Mail Retrieval Proxy
-Name: perdition
-Version: %ver
-Release: %rel
-Copyright: GPL
-Group: Applications/Internet
-Source: ftp://ftp.vergenet.net/pub/perdition/perdition-%{ver}.tar.gz
-BuildRoot: /var/tmp/perdition-%{PACKAGE_VERSION}-root
-Packager: Horms <horms@vergenet.net>
-URL: http://vergenet.net/linux/perdition/
-Docdir: %{prefix}/doc
-Provides: perdition-%{ver}-%{rel}
+Summary:	Mail Retrieval Proxy
+Name:		perdition
+Version:	0.1.5
+Release:	1
+License:	GPL
+Group:		Networking/Daemons
+Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{ver}.tar.gz
+URL:		http://vergenet.net/linux/perdition/
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Perdition is allows users to connect to a content-free POP3 or IMAP4 server
-that will redirect them to their real POP3 or IMAP4 server. This enables
-mail retrieval for a domain to be split across multiple backend servers on
-a per user basis. This can also be used to as a POP3 or IMAP4 proxy
-especially in firewall applications. Perdition supports arbitrary library
-based map access to determine the server for a user. POSIX Regular
-Expression, GDBM and MySQL libraries ship with the distribution. 
+Perdition is allows users to connect to a content-free POP3 or IMAP4
+server that will redirect them to their real POP3 or IMAP4 server.
+This enables mail retrieval for a domain to be split across multiple
+backend servers on a per user basis. This can also be used to as a
+POP3 or IMAP4 proxy especially in firewall applications. Perdition
+supports arbitrary library based map access to determine the server
+for a user. POSIX Regular Expression, GDBM and MySQL libraries ship
+with the distribution.
 
 %package devel
-Summary: Headers and static libraries for perditiondb library development
-Group: Development/Libraries
-Requires: perdition-%{ver}-%{rel}
+Summary:	Headers and static libraries for perditiondb library development
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Perdition allows for arbitrary user database access through
-shared libraries much in the maner of NSS in glibc. This package
-provides headers and libraries that may be useful in the development
-of perditiondb librarys.
+Perdition allows for arbitrary user database access through shared
+libraries much in the maner of NSS in glibc. This package provides
+headers and libraries that may be useful in the development of
+perditiondb librarys.
 
 %package libtcp_socket
-Summary: Library to imliment simple TCP client/server connections
-Group: Development/Libraries
-Copyright: LGPL
-Provides: libtcp_socket-%{ver}-%{rel}
+Summary:	Library to imliment simple TCP client/server connections
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+License:	LGPL
+Provides:	%{name}-libtcp_socket = %{version}-%{release}
 
 %description libtcp_socket
-Library that allows fast imlementation of tcp client/server conenctions.
-The library provides calls to set up and listen on a port, connect
-to a port and transfer data between a listening server port and a 
-connected client port.
+Library that allows fast imlementation of tcp client/server
+conenctions. The library provides calls to set up and listen on a
+port, connect to a port and transfer data between a listening server
+port and a connected client port.
 
 %package libtcp_socket-devel
-Summary: Headers and static libraries required to compile against libtcp_socket
-Group: Development/Libraries
-Copyright: LGPL
-Requires: libtcp_socket-%{ver}-%{rel}
+Summary:	Headers and static libraries required to compile against libtcp_socket
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+License:	LGPL
+Requires:	%{name}-libtcp_socket = %{version}-%{release}
 
 %description libtcp_socket-devel
-Headers and static libraries required when writing programmes that
-use libtcp_socket.
-
-
+Headers and static libraries required when writing programmes that use
+libtcp_socket.
 
 %prep
-%setup
+%setup -q
 
 %build
-CFLAGS="${RPM_OPT_FLAGS}" ./configure --prefix=%prefix
-make
+LDFLAGS="-s"; export LDFLAGS
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p ${RPM_BUILD_ROOT}/{,etc/{,rc.d/init.d,perdition/{mysql,postgresql},pam.d},@prefix/sbin}
+install -d ${RPM_BUILD_ROOT}/{,etc/{,rc.d/init.d,perdition/{mysql,postgresql},pam.d}}
 
-make prefix=$RPM_BUILD_ROOT%{prefix} install-strip
+%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} install-strip
 
-install -m744 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/rc.d/init.d/perdition \
-  ${RPM_BUILD_ROOT}/etc/rc.d/init.d/perdition
-install -m744 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/pam.d/perdition \
-  ${RPM_BUILD_ROOT}/etc/pam.d/perdition
+install etc/rc.d/init.d/perdition ${RPM_BUILD_ROOT}/etc/rc.d/init.d/perdition
+install etc/pam.d/perdition ${RPM_BUILD_ROOT}/etc/pam.d/perdition
   
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/mysql/makedb \
-  ${RPM_BUILD_ROOT}/etc/perdition/mysql/makedb
-install -m600 \
-  ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/mysql/perdition.sql \
-  ${RPM_BUILD_ROOT}/etc/perdition/mysql/perdition.sql
+install etc/perdition/mysql/makedb ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/mysql/makedb
+install etc/perdition/mysql/perdition.sql ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/mysql/perdition.sql
 
-install -m600 \
-  ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/postgresql/makedb \
-  ${RPM_BUILD_ROOT}/etc/perdition/postgresql/makedb
+install perdition-%{ver}%{_sysconfdir}/perdition/postgresql/makedb \
+${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/postgresql/makedb
 
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/popmap \
-  ${RPM_BUILD_ROOT}/etc/perdition/popmap
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/popmap.re \
-  ${RPM_BUILD_ROOT}/etc/perdition/popmap.re
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/Makefile \
-  ${RPM_BUILD_ROOT}/etc/perdition/Makefile
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/perdition.conf \
-  ${RPM_BUILD_ROOT}/etc/perdition/perdition.conf
-install -m600 ${RPM_BUILD_DIR}/perdition-%{ver}/etc/perdition/Makefile \
-  ${RPM_BUILD_ROOT}/etc/perdition/Makefile
+install etc/perdition/popmap ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/popmap
+install etc/perdition/popmap.re ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/popmap.re
+install -m600 etc/perdition/Makefile ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/Makefile
+install -m600 etc/perdition/perdition.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/perdition.conf
+install -m600 etc/perdition/Makefile ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/Makefile
 
-cd ${RPM_BUILD_ROOT}/usr/sbin
-ln -s perdition perdition.0
-ln -s perdition perdition.1
+ln -s perdition ${RPM_BUILD_ROOT}%{_sbindir}perdition.0
+ln -s perdition ${RPM_BUILD_ROOT}%{_sbindir}perdition.1
 
 %clean
-rm -rf $RPM_BUILD_DIR/perdition-%{ver}
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 make -q	-C /etc/perdition/
-/sbin/chkconfig --add perdition
-
-%postun
+if [ /var/lock/subsys/perdition.{imap,pop} ]; then
+	/etc/rc.d/init.d/perdition restart
+else
+	echo "Run \"/etc/rc.d/init.d/perdition start\" to start perdition daemon."
+fi
 
 %preun
-/sbin/chkconfig --del perdition
+f [ "$1" = "0" ]; then
+	/sbin/chkconfig --del perdition
+	/etc/rc.d/init.d/perdition stop
+fi
+
+%postun -p /sbin/ldconfig
+
+%post   -p libtcp_socket /sbin/ldconfig
+%postun -p libtcp_socket /sbin/ldconfig
 
 %files
-%defattr(-,root,root)
+%defattr(644,root,root,755)
 %doc README README.perditiondb AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
-%attr(755,root,root) %{prefix}/bin/makegdbm
-%attr(755,root,root) %{prefix}/sbin/perdition
-%attr(755,root,root) %{prefix}/sbin/perdition.0
-%attr(755,root,root) %{prefix}/sbin/perdition.1
-%attr(755,root,root) %{prefix}/lib/libjain.so
-%attr(755,root,root) %{prefix}/lib/libjain.so.0
-%attr(755,root,root) %{prefix}/lib/libjain.so.0.0.0
-%attr(755,root,root) %{prefix}/lib/libperdition_adt.so
-%attr(755,root,root) %{prefix}/lib/libperdition_adt.so.0
-%attr(755,root,root) %{prefix}/lib/libperdition_adt.so.0.0.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_gdbm.so
-%attr(755,root,root) %{prefix}/lib/libperditiondb_gdbm.so.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_gdbm.so.0.0.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_mysql.so
-%attr(755,root,root) %{prefix}/lib/libperditiondb_mysql.so.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_mysql.so.0.0.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_postgresql.so
-%attr(755,root,root) %{prefix}/lib/libperditiondb_postgresql.so.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_postgresql.so.0.0.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_posix_regex.so
-%attr(755,root,root) %{prefix}/lib/libperditiondb_posix_regex.so.0
-%attr(755,root,root) %{prefix}/lib/libperditiondb_posix_regex.so.0.0.0
+%attr(755,root,root) %{_bindir}/makegdbm
+%attr(755,root,root) %{_sbindir}/perdition
+%attr(755,root,root) %{_sbindir}/perdition.0
+%attr(755,root,root) %{_sbindir}/perdition.1
+%attr(755,root,root) %{_libdir}/libjain.so.*.*
+%attr(755,root,root) %{_libdir}/libperdition_adt.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_gdbm.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_mysql.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_posix_regex.so.*.*
 /etc/pam.d/perdition
-/etc/rc.d/init.d/perdition
-/etc/perdition/Makefile
-%config /etc/perdition/popmap
-%config /etc/perdition/popmap.re
-%config /etc/perdition/perdition.conf
-%config /etc/perdition/mysql/makedb
-%config /etc/perdition/mysql/perdition.sql
-%config /etc/perdition/postgresql/makedb
+%attr(754,root,root) /etc/rc.d/init.d/perdition
+
+%{_sysconfdir}/perdition/Makefile
+%config %{_sysconfdir}/perdition/popmap
+%config %{_sysconfdir}/perdition/popmap.re
+%config %{_sysconfdir}/perdition/perdition.conf
+%config %{_sysconfdir}/perdition/mysql/makedb
+%config %{_sysconfdir}/perdition/mysql/perdition.sql
+%config %{_sysconfdir}/perdition/postgresql/makedb
 
 %files devel
-%attr(644,root,root) %{prefix}/include/dynamic_array.h
-%attr(644,root,root) %{prefix}/include/jain.h
-%attr(644,root,root) %{prefix}/include/key_value.h
-%attr(644,root,root) %{prefix}/include/perdition_adt.h
-%attr(644,root,root) %{prefix}/include/queue.h
-%attr(644,root,root) %{prefix}/lib/libjain.a
-%attr(644,root,root) %{prefix}/lib/libjain.la
-%attr(644,root,root) %{prefix}/lib/libperdition_adt.a
-%attr(644,root,root) %{prefix}/lib/libperdition_adt.la
-%attr(644,root,root) %{prefix}/lib/libperditiondb_gdbm.a
-%attr(644,root,root) %{prefix}/lib/libperditiondb_gdbm.la
-%attr(644,root,root) %{prefix}/lib/libperditiondb_mysql.a
-%attr(644,root,root) %{prefix}/lib/libperditiondb_mysql.la
-%attr(644,root,root) %{prefix}/lib/libperditiondb_posix_regex.a
-%attr(644,root,root) %{prefix}/lib/libperditiondb_posix_regex.la
+%defattr(644,root,root,755)
+%{_includedir}/*
+%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/lib*.la
 
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
 
 %files libtcp_socket
+%defattr(644,root,root,755)
 %doc libtcp_pipe/COPYING AUTHORS
-%attr(755,root,root) %{prefix}/lib/libtcp_socket.so
-%attr(755,root,root) %{prefix}/lib/libtcp_socket.so.0
-%attr(755,root,root) %{prefix}/lib/libtcp_socket.so.0.0.0
+%attr(755,root,root) %{_libdir}/libtcp_socket.so.*.*
 
 %files libtcp_socket-devel
-%attr(644,root,root) %{prefix}/include/tcp_socket.h
-%attr(644,root,root) %{prefix}/lib/libtcp_socket.a
-%attr(644,root,root) %{prefix}/lib/libtcp_socket.la
-
-%changelog
-* Thu Apr 20 2000 Horms <horms@vergenet.net>
-- added postgresql files
-
-* Tue Jan  4 2000 Horms <horms@vergenet.net>
-- added libraries
-- added headers
-- made devel package
-- made libtcp_socket and libtcp_socket-devel package
-- Included mysql and posix_regex stuff in /etc
-
-* Mon Nov 29 1999 Horms <horms@vergenet.net>
-- Added perdition.conf
-
-* Sat Sep 18 1999 Horms <horms@vergenet.net>
-- updated for 0.1.0
-
-* Sat May 29 1999 Horms <horms@vergenet.net>
-- inital release
+%defattr(644,root,root,755)
+%{_includedir}/tcp_socket.h
+%{_libdir}/libtcp_socket.a
+%{_libdir}/libtcp_socket.la
