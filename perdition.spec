@@ -7,6 +7,8 @@ License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.vergenet.net/linux/perdition/download/latest/%{name}-%{version}.tar.gz
 # Source0-md5:	4499246c5380a843b1f2e7da0aecc0eb
+Source1:	%{name}.init
+Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.vergenet.net/linux/perdition/
 BuildRequires:	autoconf
@@ -193,9 +195,9 @@ install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sysconfdir}/perdition,/etc/pam.d,
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install etc/rc.d/init.d/perdition.rh $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
-install etc/sysconfig/perdition $RPM_BUILD_ROOT/etc/sysconfig/perdition
+	
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/perdition
 
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
