@@ -2,7 +2,7 @@ Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
 Version:	0.1.5
-Release:	4
+Release:	5
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -111,6 +111,7 @@ serwerem a po³±czonym klientem.
 
 %package libtcp_socket-devel
 Summary:	Headers required to compile against libtcp_socket
+Summary(pl):	Pliki nag³ówkowe do kompilacji programów u¿ywaj±cych libtcp_socket
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(es):	Desarrollo/Bibliotecas
@@ -124,6 +125,10 @@ Requires:	%{name}-libtcp_socket = %{version}-%{release}
 
 %description libtcp_socket-devel
 Headers required when writing programmes that use libtcp_socket.
+
+%description libtcp_socket-devel -l pl
+Pliki nag³ówkowe potrzebne do tworzenia programów u¿ywaj±cych
+biblioteki libtcp_socket.
 
 %package libtcp_socket-static
 Summary:	Static libtcp_socket library
@@ -180,6 +185,8 @@ install etc/perdition/Makefile $RPM_BUILD_ROOT%{_sysconfdir}/perdition/Makefile
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
 
+gzip -9nf README README.perditiondb AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -206,7 +213,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README README.perditiondb AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
+%doc {README,README.perditiondb,AUTHORS,ChangeLog,NEWS,CODING_LOCATIONS,TODO}.gz
 %attr(755,root,root) %{_bindir}/makegdbm
 %attr(755,root,root) %{_sbindir}/perdition
 %attr(755,root,root) %{_sbindir}/perdition.0
@@ -240,7 +247,7 @@ fi
 
 %files libtcp_socket
 %defattr(644,root,root,755)
-%doc libtcp_pipe/COPYING AUTHORS
+%doc AUTHORS.gz
 %attr(755,root,root) %{_libdir}/libtcp_socket.so.*.*
 
 %files libtcp_socket-devel
