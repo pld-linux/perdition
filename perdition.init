@@ -15,10 +15,15 @@
 . /etc/sysconfig/network
 
 # Check that networking is up.
-if is_no "${NETWORKING}"; then
-	msg_Network_Down <service>
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down <service>
+		exit 1
+	fi
+else
+	exit 0
 fi
+
 
 # See how we were called.
 case "$1" in
@@ -30,7 +35,7 @@ case "$1" in
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.0
 	else
-		msg_Already_Running "perdition (POP3)"
+		msg_already_running "perdition (POP3)"
 		exit 1
 	fi
 	# Check if the service is already running?
@@ -40,40 +45,39 @@ case "$1" in
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.1
 	else
-		msg_Already_Running "perdition (IMAP4)"
+		msg_already_running "perdition (IMAP4)"
 		exit 1
 	fi
-        ;;
+	;;
   status)
-        status perdition.0
-        status perdition.1
+	status perdition.0
+	status perdition.1
 	;;
   restart|reload|force-reload)
-        $0 stop
+	$0 stop
 	$0 start
-        ;;
+	;;
   stop)
-        # Stop daemons.
+	# Stop daemons.
 	if [ -f /var/lock/subsys/perdition.0 ]; then
 		msg_stopping "perdition (POP3)"
 		killproc perdition.0
 		rm -f /var/lock/subsys/perdition.0 >/dev/null 2>&1
 	else
-		msg_Not_Running "perdition (POP3)"
-		exit 1
+		msg_not_running "perdition (POP3)"
+		RETVAL=1
 	fi	
-        # Stop daemons.
 	if [ -f /var/lock/subsys/perdition.1 ]; then
 		msg_stopping "perdition (IMAP4)"
 		killproc perdition.1
 		rm -f /var/lock/subsys/perdition.1 >/dev/null 2>&1
 	else
-		msg_Not_Running "perdition (IMAP4)"
+		msg_not_running "perdition (IMAP4)"
 		exit 1
 	fi	
 	;;
   *)
-	msg_Usage "$0 {start|stop|status|restart|reload|force-reload}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 1
 esac
 
