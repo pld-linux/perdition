@@ -96,7 +96,7 @@ install -d $RPM_BUILD_ROOT/{,etc/{,rc.d/init.d,perdition,pam.d,sysconfig}}
 
 install etc/rc.d/init.d/perdition.rh $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
 install etc/sysconfig/perdition $RPM_BUILD_ROOT/etc/sysconfig/perdition
-  
+
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
 
