@@ -5,15 +5,21 @@ Version:	0.1.5
 Release:	5
 License:	GPL
 Group:		Networking/Daemons
+Group(cs):	Sí»ové/Démoni
 Group(de):	Netzwerkwesen/Server
+Group(es):	Red/Servidores
+Group(fr):	Réseau/Serveurs
 Group(pl):	Sieciowe/Serwery
+Group(pt):	Rede/Servidores
+Group(ru):	óÅÔÅ×ÙÅ/äÅÍÏÎÙ
 Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{version}.tar.gz
 URL:		http://vergenet.net/linux/perdition/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRequires:	mysql-devel
 Prereq:		/sbin/chkconfig
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perdition is allows users to connect to a content-free POP3 or IMAP4
@@ -39,11 +45,14 @@ zgodnych z POSIX oraz baz GDBM i MySQL.
 Summary:	Headers for perditiondb library development
 Summary(pl):	Pliki nag³ówkowe do bibliotek permitiondb
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(cs):	Vıvojové prostøedky/Knihovny
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}-%{release}
@@ -51,8 +60,8 @@ Requires:	%{name} = %{version}-%{release}
 %description devel
 Perdition allows for arbitrary user database access through shared
 libraries much in the maner of NSS in glibc. This package provides
-libraries that may be useful in the development of
-perditiondb libraries.
+libraries that may be useful in the development of perditiondb
+libraries.
 
 %description devel -l pl
 Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
@@ -63,11 +72,14 @@ biblioteki przydatne do robienia bibliotek permitiondb.
 Summary:	Static libraries for perditiondb library development
 Summary(pl):	Biblioteki statyczne do bibliotek permitiondb
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(cs):	Vıvojové prostøedky/Knihovny
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}-%{release}
@@ -75,8 +87,8 @@ Requires:	%{name}-devel = %{version}-%{release}
 %description static
 Perdition allows for arbitrary user database access through shared
 libraries much in the maner of NSS in glibc. This package provides
-static libraries that may be useful in the development of
-perditiondb libraries.
+static libraries that may be useful in the development of perditiondb
+libraries.
 
 %description static -l pl
 Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
@@ -87,10 +99,13 @@ biblioteki statyczne przydatne do robienia bibliotek permitiondb.
 Summary:	Library to implement simple TCP client/server connections
 Summary(pl):	Biblioteka do implementacji prostych po³±czeñ TCP klient/serwer
 Group:		Libraries
-Group(de):	Libraries
+Group(cs):	Knihovny
+Group(de):	Bibliotheken
 Group(es):	Bibliotecas
 Group(fr):	Librairies
+Group(ja):	¥é¥¤¥Ö¥é¥ê
 Group(pl):	Biblioteki
+Group(pt):	Bibliotecas
 Group(pt_BR):	Bibliotecas
 Group(ru):	âÉÂÌÉÏÔÅËÉ
 Group(uk):	â¦ÂÌ¦ÏÔÅËÉ
@@ -113,11 +128,14 @@ serwerem a po³±czonym klientem.
 Summary:	Headers required to compile against libtcp_socket
 Summary(pl):	Pliki nag³ówkowe do kompilacji programów u¿ywaj±cych libtcp_socket
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(cs):	Vıvojové prostøedky/Knihovny
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 License:	LGPL
@@ -134,11 +152,14 @@ biblioteki libtcp_socket.
 Summary:	Static libtcp_socket library
 Summary(pl):	Biblioteka statyczna libtcp_socket
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(cs):	Vıvojové prostøedky/Knihovny
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 License:	LGPL
@@ -154,9 +175,11 @@ Statyczna wersja biblioteki libtcp_socket.
 %setup -q
 
 %build
+rm -f missing
 libtoolize --copy --force
 aclocal
 autoconf
+automake -a -c
 %configure
 %{__make}
 
@@ -173,8 +196,7 @@ install etc/pam.d/perdition $RPM_BUILD_ROOT/etc/pam.d/perdition
 install etc/perdition/mysql/makedb $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/makedb
 install etc/perdition/mysql/perdition.sql $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/perdition.sql
 
-install perdition-%{version}%{_sysconfdir}/perdition/postgresql/makedb \
-	$RPM_BUILD_ROOT%{_sysconfdir}/perdition/postgresql/makedb
+install etc/perdition/postgresql/makedb $RPM_BUILD_ROOT%{_sysconfdir}/perdition/postgresql/makedb
 
 install etc/perdition/popmap $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap
 install etc/perdition/popmap.re $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap.re
@@ -213,16 +235,14 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc {README,README.perditiondb,AUTHORS,ChangeLog,NEWS,CODING_LOCATIONS,TODO}.gz
+%doc *.gz
 %attr(755,root,root) %{_bindir}/makegdbm
-%attr(755,root,root) %{_sbindir}/perdition
-%attr(755,root,root) %{_sbindir}/perdition.0
-%attr(755,root,root) %{_sbindir}/perdition.1
+%attr(755,root,root) %{_sbindir}/perdition*
 %attr(755,root,root) %{_libdir}/libjain.so.*.*
 %attr(755,root,root) %{_libdir}/libperdition_adt.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_gdbm.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_mysql.so.*.*
-%attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
+#%attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_posix_regex.so.*.*
 %config(noreplace) %verify(not mtime, size, md5) /etc/pam.d/perdition
 %attr(754,root,root) /etc/rc.d/init.d/perdition
