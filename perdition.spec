@@ -6,12 +6,18 @@ Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(cs):	Sí»ové/Démoni
+Group(da):	Netværks/Dæmoner
 Group(de):	Netzwerkwesen/Server
 Group(es):	Red/Servidores
 Group(fr):	Réseau/Serveurs
+Group(is):	Verkfræği/Púkar
+Group(it):	Rete/Demoni
+Group(no):	Nettverks/Daemoner
 Group(pl):	Sieciowe/Serwery
 Group(pt):	Rede/Servidores
 Group(ru):	óÅÔÅ×ÙÅ/äÅÍÏÎÙ
+Group(sl):	Omre¾ni/Stre¾niki
+Group(sv):	Nätverk/Demoner
 Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{version}.tar.gz
 URL:		http://vergenet.net/linux/perdition/
 BuildRequires:	autoconf
@@ -49,14 +55,20 @@ Summary:	Headers for perditiondb library development
 Summary(pl):	Pliki nag³ówkowe do bibliotek permitiondb
 Group:		Development/Libraries
 Group(cs):	Vıvojové prostøedky/Knihovny
+Group(da):	Udvikling/Biblioteker
 Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(is):	Şróunartól/Ağgerğasöfn
+Group(it):	Sviluppo/Librerie
 Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	Utvikling/Bibliotek
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
 Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	Razvoj/Knji¾nice
+Group(sv):	Utveckling/Bibliotek
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}-%{release}
 
@@ -76,14 +88,20 @@ Summary:	Static libraries for perditiondb library development
 Summary(pl):	Biblioteki statyczne do bibliotek permitiondb
 Group:		Development/Libraries
 Group(cs):	Vıvojové prostøedky/Knihovny
+Group(da):	Udvikling/Biblioteker
 Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(is):	Şróunartól/Ağgerğasöfn
+Group(it):	Sviluppo/Librerie
 Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	Utvikling/Bibliotek
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
 Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	Razvoj/Knji¾nice
+Group(sv):	Utveckling/Bibliotek
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}-%{release}
 
