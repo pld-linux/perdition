@@ -3,6 +3,9 @@
 # perdition	Mail retrieval proxy server
 #
 # chkconfig: 2345 81 29
+#
+# description:	Mail retrieval proxy server
+#
 
 # Source function library.
 . /etc/rc.d/init.d/functions

@@ -35,6 +35,7 @@ BuildRequires:	vanessa_socket-devel >= 0.0.5
 PreReq:		rc-scripts
 Requires(post):	/sbin/ldconfig
 Requires(post,preun):	/sbin/chkconfig
+Requires:	%{name}-gdbm = %{version}-%{release}
 Requires:	vanessa_adt >= 0.0.4
 Requires:	vanessa_logger >= 0.0.4
 Requires:	vanessa_socket >= 0.0.5
@@ -222,7 +223,7 @@ else
 fi
 
 %preun
-f [ "$1" = "0" ]; then
+if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del perdition
 	/etc/rc.d/init.d/perdition stop
 fi
