@@ -67,27 +67,28 @@ LDFLAGS="-s"; export LDFLAGS
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d ${RPM_BUILD_ROOT}/{,etc/{,rc.d/init.d,perdition/{mysql,postgresql},pam.d}}
+install -d $RPM_BUILD_ROOT/{,etc/{,rc.d/init.d,perdition/{mysql,postgresql},pam.d}}
 
-%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} install-strip
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-install etc/rc.d/init.d/perdition ${RPM_BUILD_ROOT}/etc/rc.d/init.d/perdition
-install etc/pam.d/perdition ${RPM_BUILD_ROOT}/etc/pam.d/perdition
+install etc/rc.d/init.d/perdition $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
+install etc/pam.d/perdition $RPM_BUILD_ROOT/etc/pam.d/perdition
   
-install etc/perdition/mysql/makedb ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/mysql/makedb
-install etc/perdition/mysql/perdition.sql ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/mysql/perdition.sql
+install etc/perdition/mysql/makedb $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/makedb
+install etc/perdition/mysql/perdition.sql $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/perdition.sql
 
-install perdition-%{ver}%{_sysconfdir}/perdition/postgresql/makedb \
-${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/postgresql/makedb
+install perdition-%{version}%{_sysconfdir}/perdition/postgresql/makedb \
+	$RPM_BUILD_ROOT%{_sysconfdir}/perdition/postgresql/makedb
 
-install etc/perdition/popmap ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/popmap
-install etc/perdition/popmap.re ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/popmap.re
-install -m600 etc/perdition/Makefile ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/Makefile
-install -m600 etc/perdition/perdition.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/perdition.conf
-install -m600 etc/perdition/Makefile ${RPM_BUILD_ROOT}%{_sysconfdir}/perdition/Makefile
+install etc/perdition/popmap $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap
+install etc/perdition/popmap.re $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap.re
+install etc/perdition/Makefile $RPM_BUILD_ROOT%{_sysconfdir}/perdition/Makefile
+install etc/perdition/perdition.conf $RPM_BUILD_ROOT%{_sysconfdir}/perdition/perdition.conf
+install etc/perdition/Makefile $RPM_BUILD_ROOT%{_sysconfdir}/perdition/Makefile
 
-ln -s perdition ${RPM_BUILD_ROOT}%{_sbindir}perdition.0
-ln -s perdition ${RPM_BUILD_ROOT}%{_sbindir}perdition.1
+ln -s perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
+ln -s perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -109,8 +110,8 @@ fi
 
 %postun -p /sbin/ldconfig
 
-%post   -p libtcp_socket /sbin/ldconfig
-%postun -p libtcp_socket /sbin/ldconfig
+%post   libtcp_socket -p /sbin/ldconfig
+%postun libtcp_socket -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
