@@ -1,57 +1,80 @@
 #!/bin/sh
 #
-# Version:      0.1.0 /etc/init.d/rc.d/perdition  18th-September-1999
+# perdition	Perdition is a POP3 and IMAP4 proxy
 #
-# Author:       Horms <horms@vergenet.net>
-#
-# Adapted from: Tomasz K³oczko, <kloczek@rudy.mif.pg.gda.pl>
-#               Michele Marziani <marziani@fe.infn.it>
-#
-# perdition:
-# chkconfig: 2345 81 29
-# description: Perdition is a POP3 and IMAP4 proxy designed to \
-# enable users to contact a content free pop server that \
-# will direct them to a real pop server on a per user basis\
-# processname: perdition
+# chkconfig:	2345 81 29
+# description:	Perdition is a POP3 and IMAP4 proxy designed to \
+#		enable users to contact a content free pop server that \
+#		will direct them to a real pop server on a per user basis\
+# processname:	perdition
 
-# Source function library.
+# Source function library
 . /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if is_no "${NETWORKING}"; then
+	msg_Network_Down <service>
+	exit 1
+fi
 
 # See how we were called.
 case "$1" in
   start)
-        echo -n "Starting perdition services (POP3): "
-	daemon /usr/sbin/perdition.0 -P POP3
-	touch /var/lock/subsys/perdition.0
-        echo
-
-        echo -n "Starting perdition services (IMAP4): "
-	daemon /usr/sbin/perdition.1 -P IMAP4
-	touch /var/lock/subsys/perdition.1
-	echo
-	;;
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/perdition.0 ]; then
+		msg_starting "perdition (POP3)"
+		daemon perdition.0 -P POP3
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.0
+	else
+		msg_Already_Running "perdition (POP3)"
+		exit 1
+	fi
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/perdition.1 ]; then
+		msg_starting "perdition (IMAP4)"
+		daemon perdition.0 -P IMAP4
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.1
+	else
+		msg_Already_Running "perdition (IMAP4)"
+		exit 1
+	fi
+        ;;
   status)
-        status perdition
+        status perdition.0
+        status perdition.1
 	;;
-  restart|reload)
+  restart|reload|force-reload)
         $0 stop
 	$0 start
         ;;
   stop)
-        echo -n "Shutting down perdition services (POP3): "
-	killproc perdition.0
-	rm -f /var/lock/subsys/perdition.0
-        echo
-
-        echo -n "Shutting down perdition services (IMAP4): "
-	killproc perdition.1
-	rm -f /var/lock/subsys/perdition.1
-	echo
+        # Stop daemons.
+	if [ -f /var/lock/subsys/perdition.0 ]; then
+		msg_stopping "perdition (POP3)"
+		killproc perdition.0
+		rm -f /var/lock/subsys/perdition.0 >/dev/null 2>&1
+	else
+		msg_Not_Running "perdition (POP3)"
+		exit 1
+	fi	
+        # Stop daemons.
+	if [ -f /var/lock/subsys/perdition.1 ]; then
+		msg_stopping "perdition (IMAP4)"
+		killproc perdition.1
+		rm -f /var/lock/subsys/perdition.1 >/dev/null 2>&1
+	else
+		msg_Not_Running "perdition (IMAP4)"
+		exit 1
+	fi	
 	;;
   *)
-	echo "Usage: perdition {start|stop|status|restart|reload}"
+	msg_Usage "$0 {start|stop|status|restart|reload|force-reload}"
 	exit 1
 esac
 
-exit 0
-
+exit $RETVAL
