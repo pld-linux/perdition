@@ -2,7 +2,7 @@ Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
 Version:	0.1.5
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -217,7 +217,7 @@ fi
 %attr(755,root,root) %{_libdir}/libperditiondb_mysql.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_posix_regex.so.*.*
-/etc/pam.d/perdition
+%config(noreplace) %verify(not mtime, size, md5) /etc/pam.d/perdition
 %attr(754,root,root) /etc/rc.d/init.d/perdition
 
 %{_sysconfdir}/perdition/Makefile
