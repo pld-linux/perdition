@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Version:      0.1.0 /etc/init.d/rc.d/perdition  18th-September-1999
+#
+# Author:       Horms <horms@vergenet.net>
+#
+# Adapted from: Tomasz K³oczko, <kloczek@rudy.mif.pg.gda.pl>
+#               Michele Marziani <marziani@fe.infn.it>
+#
+# perdition:
+# chkconfig: 2345 81 29
+# description: Perdition is a POP3 and IMAP4 proxy designed to \
+# enable users to contact a content free pop server that \
+# will direct them to a real pop server on a per user basis\
+# processname: perdition
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# See how we were called.
+case "$1" in
+  start)
+        echo -n "Starting perdition services (POP3): "
+	daemon /usr/sbin/perdition.0 -P POP3
+	touch /var/lock/subsys/perdition.0
+        echo
+
+        echo -n "Starting perdition services (IMAP4): "
+	daemon /usr/sbin/perdition.1 -P IMAP4
+	touch /var/lock/subsys/perdition.1
+	echo
+	;;
+  status)
+        status perdition
+	;;
+  restart|reload)
+        $0 stop
+	$0 start
+        ;;
+  stop)
+        echo -n "Shutting down perdition services (POP3): "
+	killproc perdition.0
+	rm -f /var/lock/subsys/perdition.0
+        echo
+
+        echo -n "Shutting down perdition services (IMAP4): "
+	killproc perdition.1
+	rm -f /var/lock/subsys/perdition.1
+	echo
+	;;
+  *)
+	echo "Usage: perdition {start|stop|status|restart|reload}"
+	exit 1
+esac
+
+exit 0
+
