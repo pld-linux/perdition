@@ -2,10 +2,11 @@ Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
 Version:	1.15
-Release:	0.1
+Release:	0.8
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.vergenet.net/linux/perdition/download/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	7c3aaf30198cf73191a984a76637a940
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
@@ -18,11 +19,13 @@ BuildRequires:	db-devel
 BuildRequires:	gdbm-devel
 # ps2pdf
 BuildRequires:	ghostscript
+BuildRequires:	ghostscript-fonts-std
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	mysql-devel
 BuildRequires:	openldap-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pam-devel
+BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-format-latex
