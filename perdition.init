@@ -24,7 +24,7 @@ else
 	exit 0
 fi
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -36,26 +36,28 @@ case "$1" in
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.0
 	else
 		msg_already_running "perdition (POP3)"
-		exit 1
 	fi
-	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/perdition.1 ]; then
 		msg_starting "perdition (IMAP4)"
 		daemon perdition.0 -P IMAP4
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.1
+		RET=$?
+		[ $RETVAL -eq 0 ] && RETVAL=$RET
+		[ $RET -eq 0 ] && touch /var/lock/subsys/perdition.1
 	else
 		msg_already_running "perdition (IMAP4)"
-		exit 1
 	fi
 	;;
   status)
 	status perdition.0
+	RETVAL=$?
 	status perdition.1
+	RET=$?
+	[ $RETVAL -eq 0 ] && RETVAL=$RET
 	;;
-  restart|reload|force-reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   stop)
 	# Stop daemons.
@@ -65,7 +67,6 @@ case "$1" in
 		rm -f /var/lock/subsys/perdition.0 >/dev/null 2>&1
 	else
 		msg_not_running "perdition (POP3)"
-		RETVAL=1
 	fi	
 	if [ -f /var/lock/subsys/perdition.1 ]; then
 		msg_stopping "perdition (IMAP4)"
@@ -73,12 +74,11 @@ case "$1" in
 		rm -f /var/lock/subsys/perdition.1 >/dev/null 2>&1
 	else
 		msg_not_running "perdition (IMAP4)"
-		exit 1
 	fi	
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL
