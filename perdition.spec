@@ -45,6 +45,17 @@ Group(ru):	Разработка/Библиотеки
 Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}-%{release}
 
+%description devel
+Perdition allows for arbitrary user database access through shared
+libraries much in the maner of NSS in glibc. This package provides
+libraries that may be useful in the development of
+perditiondb libraries.
+
+%description devel -l pl
+Perdition pozwala na u©ycie dowolnych bibliotek dostЙpu poprzez
+biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza
+biblioteki przydatne do robienia bibliotek permitiondb.
+
 %package static
 Summary:	Static libraries for perditiondb library development
 Summary(pl):	Biblioteki statyczne do bibliotek permitiondb
@@ -135,6 +146,9 @@ Statyczna wersja biblioteki libtcp_socket.
 %setup -q
 
 %build
+libtoolize --copy --force
+aclocal
+autoconf
 %configure
 %{__make}
 
