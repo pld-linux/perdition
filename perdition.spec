@@ -20,7 +20,7 @@ BuildRequires:	ghostscript
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	mysql-devel
 BuildRequires:	openldap-devel
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pam-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	tetex-dvips
