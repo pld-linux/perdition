@@ -94,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-make -q	-C /etc/perdition/
+%{__make} -q	-C /etc/perdition/
 if [ /var/lock/subsys/perdition.{imap,pop} ]; then
 	/etc/rc.d/init.d/perdition restart
 else
