@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.vergenet.net/pub/perdition/%{name}-%{version}.tar.gz
+# Source0-md5:	504213f33dd23d3436ccee5cbc4e7817
 URL:		http://vergenet.net/linux/perdition/
 BuildRequires:	autoconf
 BuildRequires:	automake
