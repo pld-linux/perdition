@@ -100,7 +100,6 @@ install etc/sysconfig/perdition $RPM_BUILD_ROOT/etc/sysconfig/perdition
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
 
-gzip -9nf README AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,7 +124,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
 %attr(755,root,root) %{_bindir}/makegdbm
 %attr(755,root,root) %{_bindir}/perditiondb_ldap_makedb
 %attr(755,root,root) %{_bindir}/perditiondb_mysql_makedb
