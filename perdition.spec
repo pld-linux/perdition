@@ -15,7 +15,9 @@ BuildRequires:	mysql-devel
 BuildRequires:	vanessa_adt-devel
 BuildRequires:	vanessa_logger-devel
 BuildRequires:	vanessa_socket-devel
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post):	/sbin/ldconfig
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -90,7 +92,7 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{,etc/{,rc.d/init.d,perdition,pam.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sysconfdir}/perdition,/etc/pam.d,/etc/sysconfig}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
