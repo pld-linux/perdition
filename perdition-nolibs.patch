@@ -1,0 +1,36 @@
+--- perdition-1.11/perdition/db/nis/Makefile.am.orig	Mon Jan  6 03:11:05 2003
++++ perdition-1.11/perdition/db/nis/Makefile.am	Tue Aug 12 12:21:38 2003
+@@ -32,7 +32,7 @@
+ 
+ libperditiondb_nis_la_LDFLAGS    = -version-info 0:0:0
+ 
+-libperditiondb_nis_la_LIBADD = @ssl_lib@
++libperditiondb_nis_la_LIBADD = @ssl_lib@ @yp_lib@
+ 
+ INCLUDES=\
+ -I$(top_srcdir)/ \
+--- perdition-1.11/configure.in.orig	Fri Jun  6 05:56:52 2003
++++ perdition-1.11/configure.in	Tue Aug 12 12:22:01 2003
+@@ -39,10 +39,10 @@
+ AC_CHECK_LIB(dl, dlopen,  [ dl_lib="-ldl" ], [ dl_lib="" ])
+ AC_CHECK_LIB(gdbm, gdbm_open, true, true)
+ AC_CHECK_LIB(db, db_create, true, true)
+-AC_CHECK_LIB(nsl, yp_match, true, true)
+-AC_CHECK_LIB(socket, socket, [ socket_lib="-lsocket" ], [ socket_lib="" ])
+-AC_CHECK_LIB(nsl, gethostbyname, [ nsl_lib="-lnsl" ], [ nsl_lib="" ])
+-AC_CHECK_LIB(resolv, inet_aton, [ resolv_lib="-lresolv" ], [ resolv_lib="" ])
++AC_CHECK_LIB(nsl, yp_match, [ yp_lib="-lnsl" ], [ yp_lib="" ])
++AC_CHECK_FUNC(socket, [ socket_lib="" ], [AC_CHECK_LIB(socket, socket, [ socket_lib="-lsocket" ], [ socket_lib="" ])])
++AC_CHECK_FUNC(gethostbyname, [ nsl_lib="" ], [AC_CHECK_LIB(nsl, gethostbyname, [ nsl_lib="-lnsl" ], [ nsl_lib="" ])])
++AC_CHECK_FUNC(inet_aton, [ resolv_lib="" ], [AC_CHECK_LIB(resolv, inet_aton, [ resolv_lib="-lresolv" ], [ resolv_lib="" ])])
+ AC_CHECK_LIB(crypt, crypt, [ crypt_lib="-lcrypt" ], [ crypt_lib="" ])
+ AC_CHECK_LIB(
+   popt,
+@@ -1124,6 +1124,7 @@
+ AC_SUBST(socket_lib)
+ AC_SUBST(dl_lib)
+ AC_SUBST(nsl_lib)
++AC_SUBST(yp_lib)
+ AC_SUBST(resolv_lib)
+ AC_SUBST(crypt_lib)
+ AC_SUBST(pam_dir)
