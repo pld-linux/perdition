@@ -1,84 +1,161 @@
 #!/bin/sh
 #
-# perdition	Perdition is a POP3 and IMAP4 proxy
+# perdition	Mail retrieval proxy server
 #
-# chkconfig:	2345 81 29
-# description:	Perdition is a POP3 and IMAP4 proxy designed to \
-#		enable users to contact a content free pop server that \
-#		will direct them to a real pop server on a per user basis\
-# processname:	perdition
+# chkconfig: 2345 81 29
 
-# Source function library
+# Source function library.
 . /etc/rc.d/init.d/functions
 
 # Get network config
 . /etc/sysconfig/network
+ 
+# Get service config 
+[ -f /etc/sysconfig/perdition ] && . /etc/sysconfig/perdition
+
+# Please do not edit the values below.
+# Rather, please edit /etc/sysconfig/perdition
+RUN_PERDITION="${RUN_PERDITION:=yes}"
+FLAGS="${FLAGS:=}"
+POP3="${POP3:=yes}"
+POP3_FLAGS="${POP3_FLAGS:=}"
+POP3S="${POP3S:=yes}"
+POP3S_FLAGS="${POP3S_FLAGS:=}"
+IMAP4="${IMAP4:=yes}"
+IMAP4_FLAGS="${IMAP4_FLAGS:=}"
+IMAP4S="${IMAP4S:=yes}"
+IMAP4S_FLAGS="${IMAP4S_FLAGS:=}"
+
+if [ "$RUN_PERDITION" != "yes" ]; then
+	exit 0
+fi
+
 
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
-	if [ ! -f /var/lock/subsys/network ]; then
-		msg_network_down <service>
-		exit 1
-	fi
+        if [ ! -f /var/lock/subsys/network ]; then
+                msg_network_down Perdition
+                exit 1
+        fi
 else
-	exit 0
+        exit 0
 fi
 
 RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/perdition.0 ]; then
-		msg_starting "perdition (POP3)"
-		daemon perdition.0 -P POP3
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.0
-	else
-		msg_already_running "perdition (POP3)"
+	if [ "$POP3" = "yes" ]; then
+	    if [ ! -f /var/lock/subsys/perdition.pop3 ]; then
+    	        msg_starting "Perdition (POP3)"
+		daemon /usr/sbin/perdition.pop3 $FLAGS $POP3_FLAGS
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.pop3
+            else
+                msg_already_running "Perdition (POP3)"
+    	    fi
 	fi
-	if [ ! -f /var/lock/subsys/perdition.1 ]; then
-		msg_starting "perdition (IMAP4)"
-		daemon perdition.0 -P IMAP4
-		RET=$?
-		[ $RETVAL -eq 0 ] && RETVAL=$RET
-		[ $RET -eq 0 ] && touch /var/lock/subsys/perdition.1
-	else
-		msg_already_running "perdition (IMAP4)"
+
+	if [ "$POP3S" = "yes" ]; then
+	    if [ ! -f /var/lock/subsys/perdition.pop3s ]; then
+        	msg_starting "Perdition (POP3S)"
+		daemon /usr/sbin/perdition.pop3s $FLAGS $POP3S_FLAGS
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.pop3s
+            else
+                msg_already_running "Perdition (POP3S)"
+            fi
+        fi
+
+	if [ "$IMAP4" = "yes" ]; then
+	    if [ ! -f /var/lock/subsys/perdition.imap4 ]; then
+        	msg_starting "Perdition (IMAP4)"
+		daemon /usr/sbin/perdition.imap4 $FLAGS $IMAP4_FLAGS
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.imap4
+            else
+                msg_already_running "Perdition (IMAP4)"
+            fi
+	fi
+
+	if [ "$IMAP4S" = "yes" ]; then
+	    if [ ! -f /var/lock/subsys/perdition.imaps ]; then
+        	msg_starting "Perdition (IMAP4S)"
+		daemon /usr/sbin/perdition.imaps $FLAGS $IMAP4_FLAGS
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && touch /var/lock/subsys/perdition.imaps
+            else
+                msg_already_running "Perdition (IMAP4S)"
+            fi
 	fi
 	;;
   status)
-	status perdition.0
-	RETVAL=$?
-	status perdition.1
-	RET=$?
-	[ $RETVAL -eq 0 ] && RETVAL=$RET
-	;;
-  restart|force-reload)
-	$0 stop
-	$0 start
+        if [ "$POP3" = "yes" ]; then
+        	status perdition.pop3
+	fi
+        if [ "$POP3S" = "yes" ]; then
+        	status perdition.pop3s
+	fi
+	if [ "$IMAP4" = "yes" ]; then
+        	status perdition.imap4
+	fi
+	if [ "$IMAP4S" = "yes" ]; then
+        	status perdition.imaps
+	fi
 	exit $?
 	;;
+  restart|reload)
+        $0 stop
+	$0 start
+        ;;
   stop)
-	# Stop daemons.
-	if [ -f /var/lock/subsys/perdition.0 ]; then
-		msg_stopping "perdition (POP3)"
-		killproc perdition.0
-		rm -f /var/lock/subsys/perdition.0 >/dev/null 2>&1
-	else
-		msg_not_running "perdition (POP3)"
-	fi	
-	if [ -f /var/lock/subsys/perdition.1 ]; then
-		msg_stopping "perdition (IMAP4)"
-		killproc perdition.1
-		rm -f /var/lock/subsys/perdition.1 >/dev/null 2>&1
-	else
-		msg_not_running "perdition (IMAP4)"
-	fi	
+	if [ "$POP3" = "yes" ]; then
+	    if [ -f /var/lock/subsys/perdition.pop3 ]; then
+        	msg_stopping "Perdition (POP3)"
+		killproc perdition.pop3
+		rm -f /var/lock/subsys/perdition.pop3
+	    else
+                msg_not_running "Perdition (POP3)"
+    	    fi
+	fi
+
+	if [ "$POP3S" = "yes" ]; then
+	    if [ -f /var/lock/subsys/perdition.pop3s ]; then
+        	msg_stopping "Perdition (POP3S)"
+		killproc perdition.pop3s
+		rm -f /var/lock/subsys/perdition.pop3s
+	    else
+                msg_not_running "Perdition (POP3S)"
+    	    fi
+	fi
+
+	if [ "$IMAP4" = "yes" ]; then
+	    if [ -f /var/lock/subsys/perdition.imap4 ]; then
+        	msg_stopping "Perdition (IMAP4)"
+		killproc perdition.imap4
+		rm -f /var/lock/subsys/perdition.imap4
+	    else
+                msg_not_running "Perdition (IMAP4)"
+    	    fi
+	fi
+
+	if [ "$IMAP4S" = "yes" ]; then
+	    if [ -f /var/lock/subsys/perdition.imaps ]; then
+        	msg_stopping "Perdition (IMAP4S)"
+		killproc perdition.imaps
+		rm -f /var/lock/subsys/perdition.imaps
+	    else
+                msg_not_running "Perdition (IMAP4S)"
+    	    fi
+	fi
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|status|restart|reload}"
 	exit 3
 esac
 
 exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4
+
