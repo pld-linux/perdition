@@ -95,17 +95,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 make -q	-C /etc/perdition/
-if [ /var/lock/subsys/perdition.{imap,pop} ]; then
-	/etc/rc.d/init.d/perdition restart
-else
-	echo "Run \"/etc/rc.d/init.d/perdition start\" to start perdition daemon."
-fi
+DESC="perdition daemon"; %chkconfig_add
 
 %preun
-f [ "$1" = "0" ]; then
-	/sbin/chkconfig --del perdition
-	/etc/rc.d/init.d/perdition stop
-fi
+%chkconfig_del
 
 %postun -p /sbin/ldconfig
 
