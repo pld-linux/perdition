@@ -1,15 +1,17 @@
 Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
-Version:	1.11
+Version:	1.13
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.vergenet.net/linux/perdition/download/latest/%{name}-%{version}.tar.gz
-# Source0-md5:	4499246c5380a843b1f2e7da0aecc0eb
+# Source0-md5:	1b2d9baf96504d000587ea8b9afd4222
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
+Patch1:		%{name}-daemon.patch
+Patch2:		%{name}-unknowndebug.patch
 URL:		http://www.vergenet.net/linux/perdition/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -177,6 +179,8 @@ Ten pakiet zawiera statyczn± wersjê biblioteki jain, która mo¿e byæ
 %prep
 %setup -q
 %patch -p1
+%patch1 -p0
+%patch2 -p0
 
 %build
 %{__libtoolize}

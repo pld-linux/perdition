@@ -1,0 +1,20 @@
+--- perdition/db/daemon/Makefile.am-orig	2004-03-26 20:14:34.000000000 +0000
++++ perdition/db/daemon/Makefile.am	2004-03-26 20:17:31.000000000 +0000
+@@ -35,13 +35,13 @@
+ 
+ noinst_PROGRAMS = client server
+ 
+-client_SOURCES = client.c packet.c packet.h unix_socket.c unix_socket.h
++client_SOURCES = client.c packet.h unix_socket.h
+ 
+-client_LDADD = -lvanessa_logger
++client_LDADD = -lvanessa_logger packet.lo unix_socket.lo
+ 
+-server_SOURCES = server.c packet.c packet.h unix_socket.c unix_socket.h
++server_SOURCES = server.c packet.h unix_socket.h
+ 
+-server_LDADD = -lvanessa_logger
++server_LDADD = -lvanessa_logger packet.lo unix_socket.lo
+ 
+ INCLUDES=\
+ -I$(top_srcdir)/ \
