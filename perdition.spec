@@ -2,7 +2,7 @@ Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
 Version:	0.1.5
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -33,8 +33,8 @@ u¿ytkownikom. W dystrybucji s± biblioteki do wyra¿eñ regularnych
 zgodnych z POSIX oraz baz GDBM i MySQL.
 
 %package devel
-Summary:	Headers and static libraries for perditiondb library development
-Summary(pl):	Pliki nag³ówkowe i biblioteki statyczne do bibliotek permitiondb
+Summary:	Headers for perditiondb library development
+Summary(pl):	Pliki nag³ówkowe do bibliotek permitiondb
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(es):	Desarrollo/Bibliotecas
@@ -45,16 +45,29 @@ Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}-%{release}
 
-%description devel
+%package static
+Summary:	Static libraries for perditiondb library development
+Summary(pl):	Biblioteki statyczne do bibliotek permitiondb
+Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
 Perdition allows for arbitrary user database access through shared
 libraries much in the maner of NSS in glibc. This package provides
-headers and libraries that may be useful in the development of
+static libraries that may be useful in the development of
 perditiondb libraries.
 
-%description devel -l pl
+%description static -l pl
 Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
 biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza
-nag³ówki i biblioteki przydatne do robienia bibliotek permitiondb.
+biblioteki statyczne przydatne do robienia bibliotek permitiondb.
 
 %package libtcp_socket
 Summary:	Library to implement simple TCP client/server connections
@@ -204,6 +217,7 @@ fi
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 
+%files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
