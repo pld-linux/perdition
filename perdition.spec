@@ -1,12 +1,11 @@
 Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
-Version:	1.13
+Version:	1.15
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://www.vergenet.net/linux/perdition/download/latest/%{name}-%{version}.tar.gz
-# Source0-md5:	1b2d9baf96504d000587ea8b9afd4222
+Source0:	http://www.vergenet.net/linux/perdition/download/%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
@@ -28,16 +27,18 @@ BuildRequires:	postgresql-devel
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-format-latex
 BuildRequires:	tetex-tex-babel
+BuildRequires:	tetex-fonts-adobe
+BuildRequires:	tetex-latex-psnfss
 BuildRequires:	unixODBC-devel
-BuildRequires:	vanessa_adt-devel >= 0.0.4
-BuildRequires:	vanessa_logger-devel >= 0.0.4
-BuildRequires:	vanessa_socket-devel >= 0.0.5
+BuildRequires:	vanessa_adt-devel
+BuildRequires:	vanessa_logger-devel >= 0.0.6
+BuildRequires:	vanessa_socket-devel
 PreReq:		rc-scripts
 Requires(post):	/sbin/ldconfig
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-gdbm = %{version}-%{release}
 Requires:	vanessa_adt >= 0.0.4
-Requires:	vanessa_logger >= 0.0.4
+Requires:	vanessa_logger >= 0.0.6
 Requires:	vanessa_socket >= 0.0.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -287,14 +288,14 @@ fi
 %files ldap
 %defattr(644,root,root,755)
 %doc perdition/db/ldap/doc/perdition_ldap.pdf
-%attr(755,root,root) %{_bindir}/perditiondb_ldap_makedb
+%attr(755,root,root) %{_sbindir}/perditiondb_ldap_makedb
 %attr(755,root,root) %{_libdir}/libperditiondb_ldap.so.*.*
 %{_mandir}/man8/perditiondb_ldap_makedb.8*
 /etc/openldap/schema/perdition.schema
 
 %files mysql
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/perditiondb_mysql_makedb
+%attr(755,root,root) %{_sbindir}/perditiondb_mysql_makedb
 %attr(755,root,root) %{_libdir}/libperditiondb_mysql.so.*.*
 %{_mandir}/man8/perditiondb_mysql_makedb.8*
 
@@ -305,13 +306,13 @@ fi
 
 %files odbc
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/perditiondb_odbc_makedb
+%attr(755,root,root) %{_sbindir}/perditiondb_odbc_makedb
 %attr(755,root,root) %{_libdir}/libperditiondb_odbc.so.*.*
 %{_mandir}/man8/perditiondb_odbc_makedb.8*
 
 %files postgresql
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/perditiondb_postgresql_makedb
+%attr(755,root,root) %{_sbindir}/perditiondb_postgresql_makedb
 %attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
 %{_mandir}/man8/perditiondb_postgresql_makedb.8*
 
