@@ -1,8 +1,8 @@
 Summary:	Mail Retrieval Proxy
 Summary(pl):	Proxy do ¶ci±gania poczty
 Name:		perdition
-Version:	0.1.5
-Release:	5
+Version:	0.1.9
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(cs):	Sí»ové/Démoni
@@ -18,6 +18,9 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	mysql-devel
+BuildRequires:	vanessa_adt-devel
+BuildRequires:	vanessa_logger-devel
+BuildRequires:	vanessa_socket-devel
 Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -95,86 +98,14 @@ Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
 biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza
 biblioteki statyczne przydatne do robienia bibliotek permitiondb.
 
-%package libtcp_socket
-Summary:	Library to implement simple TCP client/server connections
-Summary(pl):	Biblioteka do implementacji prostych po³±czeñ TCP klient/serwer
-Group:		Libraries
-Group(cs):	Knihovny
-Group(de):	Bibliotheken
-Group(es):	Bibliotecas
-Group(fr):	Librairies
-Group(ja):	¥é¥¤¥Ö¥é¥ê
-Group(pl):	Biblioteki
-Group(pt):	Bibliotecas
-Group(pt_BR):	Bibliotecas
-Group(ru):	âÉÂÌÉÏÔÅËÉ
-Group(uk):	â¦ÂÌ¦ÏÔÅËÉ
-License:	LGPL
-Provides:	%{name}-libtcp_socket = %{version}-%{release}
 
-%description libtcp_socket
-Library that allows fast imlementation of TCP client/server
-connections. The library provides calls to set up and listen on a
-port, connect to a port and transfer data between a listening server
-port and a connected client port.
-
-%description libtcp_socket -l pl
-Biblioteka pozwalaj±ca na szybk± implementacjê po³±czeñ TCP
-klient/serwer. Dostarcza funkcje do rozpoczêcia s³uchania na porcie,
-po³±czenia z portem i do przesy³ania danych pomiêdzy s³uchaj±cym
-serwerem a po³±czonym klientem.
-
-%package libtcp_socket-devel
-Summary:	Headers required to compile against libtcp_socket
-Summary(pl):	Pliki nag³ówkowe do kompilacji programów u¿ywaj±cych libtcp_socket
-Group:		Development/Libraries
-Group(cs):	Vývojové prostøedky/Knihovny
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
-License:	LGPL
-Requires:	%{name}-libtcp_socket = %{version}-%{release}
-
-%description libtcp_socket-devel
-Headers required when writing programmes that use libtcp_socket.
-
-%description libtcp_socket-devel -l pl
-Pliki nag³ówkowe potrzebne do tworzenia programów u¿ywaj±cych
-biblioteki libtcp_socket.
-
-%package libtcp_socket-static
-Summary:	Static libtcp_socket library
-Summary(pl):	Biblioteka statyczna libtcp_socket
-Group:		Development/Libraries
-Group(cs):	Vývojové prostøedky/Knihovny
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
-License:	LGPL
-Requires:	%{name}-libtcp_socket-devel = %{version}-%{release}
-
-%description libtcp_socket-static
-Static version of libtcp_socket library.
-
-%description libtcp_socket-static -l pl
-Statyczna wersja biblioteki libtcp_socket.
 
 %prep
 %setup -q
 
 %build
+sed -e s/AC_PROG_RANLIB/AC_PROG_LIBTOOL/ configure.in > configure.in.tmp
+mv -f configure.in.tmp configure.in
 rm -f missing
 libtoolize --copy --force
 aclocal
@@ -185,29 +116,18 @@ automake -a -c
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{,etc/{,rc.d/init.d,perdition/{mysql,postgresql},pam.d}}
+install -d $RPM_BUILD_ROOT/{,etc/{,rc.d/init.d,perdition,pam.d,sysconfig}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install etc/rc.d/init.d/perdition $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
-install etc/pam.d/perdition $RPM_BUILD_ROOT/etc/pam.d/perdition
+install etc/rc.d/init.d/perdition.rh $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
+install etc/sysconfig/perdition $RPM_BUILD_ROOT/etc/sysconfig/perdition
   
-install etc/perdition/mysql/makedb $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/makedb
-install etc/perdition/mysql/perdition.sql $RPM_BUILD_ROOT%{_sysconfdir}/perdition/mysql/perdition.sql
-
-install etc/perdition/postgresql/makedb $RPM_BUILD_ROOT%{_sysconfdir}/perdition/postgresql/makedb
-
-install etc/perdition/popmap $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap
-install etc/perdition/popmap.re $RPM_BUILD_ROOT%{_sysconfdir}/perdition/popmap.re
-install etc/perdition/Makefile $RPM_BUILD_ROOT%{_sysconfdir}/perdition/Makefile
-install etc/perdition/perdition.conf $RPM_BUILD_ROOT%{_sysconfdir}/perdition/perdition.conf
-install etc/perdition/Makefile $RPM_BUILD_ROOT%{_sysconfdir}/perdition/Makefile
-
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.0
 ln -sf perdition $RPM_BUILD_ROOT%{_sbindir}/perdition.1
 
-gzip -9nf README README.perditiondb AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
+gzip -9nf README AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -230,51 +150,42 @@ fi
 
 %postun -p /sbin/ldconfig
 
-%post   libtcp_socket -p /sbin/ldconfig
-%postun libtcp_socket -p /sbin/ldconfig
-
 %files
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) %{_bindir}/makegdbm
+%attr(755,root,root) %{_bindir}/perditiondb_ldap_makedb
+%attr(755,root,root) %{_bindir}/perditiondb_mysql_makedb
+%attr(755,root,root) %{_bindir}/perditiondb_postgresql_makedb
 %attr(755,root,root) %{_sbindir}/perdition*
 %attr(755,root,root) %{_libdir}/libjain.so.*.*
-%attr(755,root,root) %{_libdir}/libperdition_adt.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_gdbm.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_ldap.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_mysql.so.*.*
-#%attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
+%attr(755,root,root) %{_libdir}/libperditiondb_nis.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_posix_regex.so.*.*
-%config(noreplace) %verify(not mtime, size, md5) /etc/pam.d/perdition
-%attr(754,root,root) /etc/rc.d/init.d/perdition
+%attr(755,root,root) %{_libdir}/libperditiondb_postgresql.so.*.*
 
+%dir %{_sysconfdir}/perdition
 %{_sysconfdir}/perdition/Makefile
 %config %{_sysconfdir}/perdition/popmap
 %config %{_sysconfdir}/perdition/popmap.re
 %config %{_sysconfdir}/perdition/perdition.conf
-%config %{_sysconfdir}/perdition/mysql/makedb
-%config %{_sysconfdir}/perdition/mysql/perdition.sql
-%config %{_sysconfdir}/perdition/postgresql/makedb
+%attr(754,root,root) /etc/rc.d/init.d/perdition
+%config(noreplace) %verify(not mtime, size, md5) /etc/pam.d/perdition
+%config(noreplace) %verify(not mtime, size, md5) /etc/sysconfig/perdition
+
+%{_mandir}/man1/*.1*
+%{_mandir}/man5/*.5*
+%{_mandir}/man8/*.8*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
 %attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/lib*.so.0
 %attr(755,root,root) %{_libdir}/lib*.la
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-
-%files libtcp_socket
-%defattr(644,root,root,755)
-%doc AUTHORS.gz
-%attr(755,root,root) %{_libdir}/libtcp_socket.so.*.*
-
-%files libtcp_socket-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libtcp_socket.la
-%{_includedir}/tcp_socket.h
-
-%files libtcp_socket-static
-%defattr(644,root,root,755)
-%{_libdir}/libtcp_socket.a
