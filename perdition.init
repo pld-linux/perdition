@@ -12,8 +12,8 @@
 
 # Get network config
 . /etc/sysconfig/network
- 
-# Get service config 
+
+# Get service config
 [ -f /etc/sysconfig/perdition ] && . /etc/sysconfig/perdition
 
 # Please do not edit the values below.
