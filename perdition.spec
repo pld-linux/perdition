@@ -28,18 +28,18 @@ BuildRequires:	pam-devel
 BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	tetex-dvips
-BuildRequires:	tetex-format-latex
-BuildRequires:	tetex-tex-babel
 BuildRequires:	tetex-fonts-adobe
+BuildRequires:	tetex-format-latex
 BuildRequires:	tetex-latex-psnfss
+BuildRequires:	tetex-tex-babel
 BuildRequires:	unixODBC-devel
 BuildRequires:	vanessa_adt-devel
 BuildRequires:	vanessa_logger-devel >= 0.0.6
 BuildRequires:	vanessa_socket-devel
-PreReq:		rc-scripts
 Requires(post):	/sbin/ldconfig
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-gdbm = %{version}-%{release}
+Requires:	rc-scripts
 Requires:	vanessa_adt >= 0.0.4
 Requires:	vanessa_logger >= 0.0.6
 Requires:	vanessa_socket >= 0.0.5
@@ -164,8 +164,8 @@ libraries.
 
 %description devel -l pl
 Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
-biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza
-pliki nag³ówkowe przydatne do robienia bibliotek permitiondb.
+biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza pliki
+nag³ówkowe przydatne do robienia bibliotek permitiondb.
 
 %package static
 Summary:	Static jain library
@@ -204,7 +204,7 @@ install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sysconfdir}/perdition,/etc/pam.d,
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-	
+
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/perdition
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/perdition
 
@@ -265,12 +265,12 @@ fi
 %dir %{_sysconfdir}/perdition
 %{_sysconfdir}/perdition/Makefile
 %{_sysconfdir}/perdition/Makefile.popmap
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/perdition/popmap
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/perdition/popmap.re
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/perdition/perdition.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/perdition/popmap
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/perdition/popmap.re
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/perdition/perdition.conf
 %attr(754,root,root) /etc/rc.d/init.d/perdition
-%config(noreplace) %verify(not size mtime md5) /etc/pam.d/perdition
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/perdition
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/perdition
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/perdition
 
 %{_mandir}/man5/perditiondb.5*
 %{_mandir}/man8/perdition.8*
