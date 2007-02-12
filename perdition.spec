@@ -1,5 +1,5 @@
 Summary:	Mail Retrieval Proxy
-Summary(pl):	Proxy do ¶ci±gania poczty
+Summary(pl.UTF-8):   Proxy do Å›ciÄ…gania poczty
 Name:		perdition
 Version:	1.15
 Release:	0.8
@@ -55,103 +55,103 @@ supports arbitrary library based map access to determine the server
 for a user. POSIX Regular Expression, GDBM and MySQL libraries ship
 with the distribution.
 
-%description -l pl
-Perdition pozwala u¿ytkownikom ³±czyæ siê z nie zawieraj±cym nic
-serwerem POP3 lub IMAP4, który przekierowuje ich do prawdziwego
-serwera POP3 lub IMAP4. Pozwala to na ¶ci±ganie poczty dla domen
-rozbitych na wiele serwerów na podstawie nazwy u¿ytkownika. Mo¿e byæ
-tak¿e u¿ywane jako proxy POP3 lub IMAP4 na firewallach. Perdition
-pozwala u¿yæ dowolnej biblioteki do przypisywania serwerów
-u¿ytkownikom. W dystrybucji s± biblioteki do wyra¿eñ regularnych
+%description -l pl.UTF-8
+Perdition pozwala uÅ¼ytkownikom Å‚Ä…czyÄ‡ siÄ™ z nie zawierajÄ…cym nic
+serwerem POP3 lub IMAP4, ktÃ³ry przekierowuje ich do prawdziwego
+serwera POP3 lub IMAP4. Pozwala to na Å›ciÄ…ganie poczty dla domen
+rozbitych na wiele serwerÃ³w na podstawie nazwy uÅ¼ytkownika. MoÅ¼e byÄ‡
+takÅ¼e uÅ¼ywane jako proxy POP3 lub IMAP4 na firewallach. Perdition
+pozwala uÅ¼yÄ‡ dowolnej biblioteki do przypisywania serwerÃ³w
+uÅ¼ytkownikom. W dystrybucji sÄ… biblioteki do wyraÅ¼eÅ„ regularnych
 zgodnych z POSIX oraz baz GDBM i MySQL.
 
 %package bdb
 Summary:	BerkeleyDB database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy BerkeleyDB dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy BerkeleyDB dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description bdb
 BerkeleyDB database library for perdition.
 
-%description bdb -l pl
-Biblioteka obs³uguj±ca bazy BerkeleyDB dla perdition.
+%description bdb -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy BerkeleyDB dla perdition.
 
 %package gdbm
 Summary:	GDBM database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy GDBM dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy GDBM dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description gdbm
 GDBM database library for perdition.
 
-%description gdbm -l pl
-Biblioteka obs³uguj±ca bazy GDBM dla perdition.
+%description gdbm -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy GDBM dla perdition.
 
 %package ldap
 Summary:	LDAP database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy LDAP dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy LDAP dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description ldap
 LDAP database library for perdition.
 
-%description ldap -l pl
-Biblioteka obs³uguj±ca bazy LDAP dla perdition.
+%description ldap -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy LDAP dla perdition.
 
 %package mysql
 Summary:	MySQL database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy MySQL dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy MySQL dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description mysql
 MySQL database library for perdition.
 
-%description mysql -l pl
-Biblioteka obs³uguj±ca bazy MySQL dla perdition.
+%description mysql -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy MySQL dla perdition.
 
 %package nis
 Summary:	NIS database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy NIS dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy NIS dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description nis
 NIS database library for perdition.
 
-%description nis -l pl
-Biblioteka obs³uguj±ca bazy NIS dla perdition.
+%description nis -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy NIS dla perdition.
 
 %package odbc
 Summary:	ODBC database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy ODBC dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy ODBC dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description odbc
 ODBC database library for perdition.
 
-%description odbc -l pl
-Biblioteka obs³uguj±ca bazy ODBC dla perdition.
+%description odbc -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy ODBC dla perdition.
 
 %package postgresql
 Summary:	PostgreSQL database library for perdition
-Summary(pl):	Biblioteka obs³uguj±ca bazy PostgreSQL dla perdition
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugujÄ…ca bazy PostgreSQL dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description postgresql
 PostgreSQL database library for perdition.
 
-%description postgresql -l pl
-Biblioteka obs³uguj±ca bazy PostgreSQL dla perdition.
+%description postgresql -l pl.UTF-8
+Biblioteka obsÅ‚ugujÄ…ca bazy PostgreSQL dla perdition.
 
 %package devel
 Summary:	Headers for perditiondb library development
-Summary(pl):	Pliki nag³ówkowe do bibliotek permitiondb
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe do bibliotek permitiondb
 License:	LGPL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
@@ -162,14 +162,14 @@ libraries much in the maner of NSS in glibc. This package provides
 headers that may be useful in the development of perditiondb
 libraries.
 
-%description devel -l pl
-Perdition pozwala na u¿ycie dowolnych bibliotek dostêpu poprzez
+%description devel -l pl.UTF-8
+Perdition pozwala na uÅ¼ycie dowolnych bibliotek dostÄ™pu poprzez
 biblioteki dzielone w stylu glibcowych NSS. Ten pakiet dostarcza pliki
-nag³ówkowe przydatne do robienia bibliotek permitiondb.
+nagÅ‚Ã³wkowe przydatne do robienia bibliotek permitiondb.
 
 %package static
 Summary:	Static jain library
-Summary(pl):	Biblioteka statyczne jain
+Summary(pl.UTF-8):   Biblioteka statyczne jain
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -177,8 +177,8 @@ Requires:	%{name}-devel = %{version}-%{release}
 This package contains static version of jain library, which may be
 (rarely) useful in the development of perditiondb libraries.
 
-%description static -l pl
-Ten pakiet zawiera statyczn± wersjê biblioteki jain, która mo¿e byæ
+%description static -l pl.UTF-8
+Ten pakiet zawiera statycznÄ… wersjÄ™ biblioteki jain, ktÃ³ra moÅ¼e byÄ‡
 (rzadko jednak) przydatna przy tworzeniu bibliotek perditiondb.
 
 %prep
