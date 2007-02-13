@@ -1,5 +1,5 @@
 Summary:	Mail Retrieval Proxy
-Summary(pl.UTF-8):   Proxy do ściągania poczty
+Summary(pl.UTF-8):	Proxy do ściągania poczty
 Name:		perdition
 Version:	1.15
 Release:	0.8
@@ -67,7 +67,7 @@ zgodnych z POSIX oraz baz GDBM i MySQL.
 
 %package bdb
 Summary:	BerkeleyDB database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy BerkeleyDB dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy BerkeleyDB dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -79,7 +79,7 @@ Biblioteka obsługująca bazy BerkeleyDB dla perdition.
 
 %package gdbm
 Summary:	GDBM database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy GDBM dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy GDBM dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -91,7 +91,7 @@ Biblioteka obsługująca bazy GDBM dla perdition.
 
 %package ldap
 Summary:	LDAP database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy LDAP dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy LDAP dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -103,7 +103,7 @@ Biblioteka obsługująca bazy LDAP dla perdition.
 
 %package mysql
 Summary:	MySQL database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy MySQL dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy MySQL dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -115,7 +115,7 @@ Biblioteka obsługująca bazy MySQL dla perdition.
 
 %package nis
 Summary:	NIS database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy NIS dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy NIS dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -127,7 +127,7 @@ Biblioteka obsługująca bazy NIS dla perdition.
 
 %package odbc
 Summary:	ODBC database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy ODBC dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy ODBC dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -139,7 +139,7 @@ Biblioteka obsługująca bazy ODBC dla perdition.
 
 %package postgresql
 Summary:	PostgreSQL database library for perdition
-Summary(pl.UTF-8):   Biblioteka obsługująca bazy PostgreSQL dla perdition
+Summary(pl.UTF-8):	Biblioteka obsługująca bazy PostgreSQL dla perdition
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -151,7 +151,7 @@ Biblioteka obsługująca bazy PostgreSQL dla perdition.
 
 %package devel
 Summary:	Headers for perditiondb library development
-Summary(pl.UTF-8):   Pliki nagłówkowe do bibliotek permitiondb
+Summary(pl.UTF-8):	Pliki nagłówkowe do bibliotek permitiondb
 License:	LGPL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
@@ -169,7 +169,7 @@ nagłówkowe przydatne do robienia bibliotek permitiondb.
 
 %package static
 Summary:	Static jain library
-Summary(pl.UTF-8):   Biblioteka statyczne jain
+Summary(pl.UTF-8):	Biblioteka statyczne jain
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
