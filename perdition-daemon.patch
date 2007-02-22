@@ -1,20 +1,14 @@
---- perdition/db/daemon/Makefile.am-orig	2004-03-26 20:14:34.000000000 +0000
-+++ perdition/db/daemon/Makefile.am	2004-03-26 20:17:31.000000000 +0000
-@@ -35,13 +35,13 @@
+--- perdition-1.17/perdition/db/daemon/Makefile.am~	2007-02-21 22:08:56.293320000 +0000
++++ perdition-1.17/perdition/db/daemon/Makefile.am	2007-02-21 22:08:50.576180000 +0000
+@@ -36,9 +36,11 @@
  
  noinst_PROGRAMS = client server
  
--client_SOURCES = client.c packet.c packet.h unix_socket.c unix_socket.h
-+client_SOURCES = client.c packet.h unix_socket.h
++client_CFLAGS = $(AM_CFLAGS)
+ client_SOURCES = client.c unix_socket.c unix_socket.h
+ client_LDADD = @socket_lib@ -lvanessa_logger -L. -lperditiondb_daemon_packet 
  
--client_LDADD = -lvanessa_logger
-+client_LDADD = -lvanessa_logger packet.lo unix_socket.lo
++server_CFLAGS = $(AM_CFLAGS)
+ server_SOURCES = server.c unix_socket.c unix_socket.h
+ server_LDADD = @socket_lib@ -lvanessa_logger -L. -lperditiondb_daemon_packet
  
--server_SOURCES = server.c packet.c packet.h unix_socket.c unix_socket.h
-+server_SOURCES = server.c packet.h unix_socket.h
- 
--server_LDADD = -lvanessa_logger
-+server_LDADD = -lvanessa_logger packet.lo unix_socket.lo
- 
- INCLUDES=\
- -I$(top_srcdir)/ \
