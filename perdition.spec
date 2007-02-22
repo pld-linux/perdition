@@ -1,12 +1,12 @@
 Summary:	Mail Retrieval Proxy
 Summary(pl.UTF-8):	Proxy do ściągania poczty
 Name:		perdition
-Version:	1.15
+Version:	1.17
 Release:	0.8
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.vergenet.net/linux/perdition/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7c3aaf30198cf73191a984a76637a940
+# Source0-md5:	6cef90e55bde9eb2d0a17acccb3516f3
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
@@ -27,6 +27,7 @@ BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pam-devel
 BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
+BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-fonts-adobe
 BuildRequires:	tetex-format-latex
@@ -38,12 +39,13 @@ BuildRequires:	vanessa_logger-devel >= 0.0.6
 BuildRequires:	vanessa_socket-devel
 Requires(post):	/sbin/ldconfig
 Requires(post,preun):	/sbin/chkconfig
-Requires:	%{name}-gdbm = %{version}-%{release}
 Requires:	rc-scripts
 Requires:	vanessa_adt >= 0.0.4
 Requires:	vanessa_logger >= 0.0.6
 Requires:	vanessa_socket >= 0.0.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		schemadir	/usr/share/openldap/schema
 
 %description
 Perdition allows users to connect to a content-free POP3 or IMAP4
@@ -181,10 +183,22 @@ This package contains static version of jain library, which may be
 Ten pakiet zawiera statyczną wersję biblioteki jain, która może być
 (rzadko jednak) przydatna przy tworzeniu bibliotek perditiondb.
 
+%package -n openldap-schema-perdition
+Summary:	Perdition LDAP schema
+Summary(pl.UTF-8):	Schemat LDAP dla perdition
+Group:		Networking/Daemons
+Requires:	openldap-servers
+
+%description -n openldap-schema-perdition
+This package contains LDAP schema for use with perdition.
+
+%description -n openldap-schema-perdition -l pl.UTF-8
+Ten pakiet zawiera schemat LDAP do używania z perdition.
+
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p0
 
 %build
@@ -194,7 +208,7 @@ Ten pakiet zawiera statyczną wersję biblioteki jain, która może być
 %{__autoheader}
 %{__automake}
 %configure \
-	--with-ldap-schema-directory=/etc/openldap/schema
+	--with-ldap-schema-directory=%{schemadir}
 
 %{__make}
 
@@ -218,18 +232,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-/sbin/chkconfig --add perdition
+/sbin/chkconfig --add %{name}
 %{__make} -q -C /etc/perdition
-if [ -f /var/lock/subsys/perdition.imap -o -f /var/lock/subsys/perdition.pop ]; then
-	/etc/rc.d/init.d/perdition restart
-else
-	echo "Run \"/etc/rc.d/init.d/perdition start\" to start perdition daemon."
-fi
+%service %{name} restart
 
 %preun
 if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del perdition
-	/etc/rc.d/init.d/perdition stop
+	%service -q %{name} stop
+	/sbin/chkconfig --del %{name}
 fi
 
 %postun -p /sbin/ldconfig
@@ -258,7 +268,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS ChangeLog NEWS CODING_LOCATIONS TODO
-%attr(755,root,root) %{_sbindir}/perdition*
+%attr(755,root,root) %{_sbindir}/perdition
+%attr(755,root,root) %{_sbindir}/perdition.*
 %attr(755,root,root) %{_libdir}/libjain.so.*.*
 %attr(755,root,root) %{_libdir}/libperditiondb_posix_regex.so.*.*
 
@@ -294,7 +305,6 @@ fi
 %attr(755,root,root) %{_sbindir}/perditiondb_ldap_makedb
 %attr(755,root,root) %{_libdir}/libperditiondb_ldap.so.*.*
 %{_mandir}/man8/perditiondb_ldap_makedb.8*
-/etc/openldap/schema/perdition.schema
 
 %files mysql
 %defattr(644,root,root,755)
@@ -328,3 +338,7 @@ fi
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libjain.a
+
+%files -n openldap-schema-perdition
+%defattr(644,root,root,755)
+%{schemadir}/perdition.schema
