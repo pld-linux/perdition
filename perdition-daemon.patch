@@ -5,10 +5,10 @@
  noinst_PROGRAMS = client server
  
 +client_CFLAGS = $(AM_CFLAGS)
- client_SOURCES = client.c unix_socket.c unix_socket.h
- client_LDADD = @socket_lib@ -lvanessa_logger -L. -lperditiondb_daemon_packet 
+ client_SOURCES = client.c 
+ client_LDADD = $(COMMON_LIBRARY_ADD)
  
 +server_CFLAGS = $(AM_CFLAGS)
- server_SOURCES = server.c unix_socket.c unix_socket.h
- server_LDADD = @socket_lib@ -lvanessa_logger -L. -lperditiondb_daemon_packet
+ server_SOURCES = server.c
+ server_LDADD = $(COMMON_LIBRARY_ADD)
  
