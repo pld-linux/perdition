@@ -1,12 +1,12 @@
 Summary:	Mail Retrieval Proxy
 Summary(pl.UTF-8):	Proxy do ściągania poczty
 Name:		perdition
-Version:	1.17
+Version:	1.17.1
 Release:	0.8
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.vergenet.net/linux/perdition/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	6cef90e55bde9eb2d0a17acccb3516f3
+# Source0-md5:	5464c517f8be810519b6187b694c9d98
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-nolibs.patch
