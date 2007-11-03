@@ -22,7 +22,7 @@ BuildRequires:	ghostscript
 BuildRequires:	ghostscript-fonts-std
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	mysql-devel
-BuildRequires:	openldap-devel
+BuildRequires:	openldap-devel >= 2.4.6
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pam-devel
 BuildRequires:	popt-devel
