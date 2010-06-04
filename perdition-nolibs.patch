@@ -4,25 +4,23 @@
  
  libperditiondb_nis_la_LDFLAGS    = -version-info 0:0:0
  
--libperditiondb_nis_la_LIBADD = @ssl_lib@
-+libperditiondb_nis_la_LIBADD = @ssl_lib@ @yp_lib@
+-libperditiondb_nis_la_LIBADD     = @nsl_lib@ -lvanessa_logger
++libperditiondb_nis_la_LIBADD     = @nsl_lib@ -lvanessa_logger @yp_lib@
  
  INCLUDES=\
  -I$(top_srcdir)/ \
---- perdition-1.11/configure.in.orig	Fri Jun  6 05:56:52 2003
-+++ perdition-1.11/configure.in	Tue Aug 12 12:22:01 2003
-@@ -39,10 +39,10 @@
+--- perdition-1.11/configure.ac	Fri Jun  6 05:56:52 2003
++++ perdition-1.18/configure.ac	Tue Aug 12 12:22:01 2010
+@@ -39,9 +39,9 @@
+ 
+ # Checks for libraries.
  AC_CHECK_LIB(dl, dlopen,  [ dl_lib="-ldl" ], [ dl_lib="" ])
- AC_CHECK_LIB(gdbm, gdbm_open, true, true)
- AC_CHECK_LIB(db, db_create, true, true)
 -AC_CHECK_LIB(nsl, yp_match, true, true)
 -AC_CHECK_LIB(socket, socket, [ socket_lib="-lsocket" ], [ socket_lib="" ])
 -AC_CHECK_LIB(nsl, gethostbyname, [ nsl_lib="-lnsl" ], [ nsl_lib="" ])
--AC_CHECK_LIB(resolv, inet_aton, [ resolv_lib="-lresolv" ], [ resolv_lib="" ])
 +AC_CHECK_LIB(nsl, yp_match, [ yp_lib="-lnsl" ], [ yp_lib="" ])
 +AC_CHECK_FUNC(socket, [ socket_lib="" ], [AC_CHECK_LIB(socket, socket, [ socket_lib="-lsocket" ], [ socket_lib="" ])])
 +AC_CHECK_FUNC(gethostbyname, [ nsl_lib="" ], [AC_CHECK_LIB(nsl, gethostbyname, [ nsl_lib="-lnsl" ], [ nsl_lib="" ])])
-+AC_CHECK_FUNC(inet_aton, [ resolv_lib="" ], [AC_CHECK_LIB(resolv, inet_aton, [ resolv_lib="-lresolv" ], [ resolv_lib="" ])])
  AC_CHECK_LIB(crypt, crypt, [ crypt_lib="-lcrypt" ], [ crypt_lib="" ])
  AC_CHECK_LIB(
    popt,
